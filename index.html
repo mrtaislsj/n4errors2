@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>日本語文法 幽玄の庵 〜百問全方位攻堅絵巻〜</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@500;700;900&family=Yuji+Boku&display=swap');
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 50% 25%, #08111d 0%, #03060a 100%);
+      font-family: 'Zen Old Mincho', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
+      color: #e2e8f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Ambient Glowing Gold Particles & Fireflies */
+    #ambient-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* ========================================================
+       PC & iPad UI: Fixed 16:9 Landscape Frame (黒漆・螺鈿・金泥)
+       ======================================================== */
+    .zen-viewport {
+      width: min(96vw, 170.66vh);
+      height: min(54vw, 96vh);
+      aspect-ratio: 16 / 9;
+      background: #090e17;
+      background-image: 
+        radial-gradient(ellipse at 85% 15%, rgba(20, 48, 85, 0.45) 0%, transparent 60%),
+        linear-gradient(to bottom, #070c14 0%, #0f1827 100%);
+      border: 8px solid #16202e;
+      border-radius: 8px;
+      box-shadow: 
+        0 0 0 2px #d4af37,
+        0 0 0 6px #05080d,
+        0 24px 60px rgba(0, 0, 0, 0.95);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 20;
+    }
+
+    /* Gilded Moonlit Header */
+    .zen-header {
+      background: linear-gradient(180deg, #101928 0%, #09101a 100%);
+      border-bottom: 2px solid #ca8a04;
+      padding: 8px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+      position: relative;
+      z-index: 25;
+      flex-shrink: 0;
+    }
+
+    .zen-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.12rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: #fde047;
+      text-shadow: 0 0 12px rgba(250, 204, 21, 0.4);
+    }
+
+    .zen-logo svg {
+      width: 24px;
+      height: 24px;
+      fill: #facc15;
+    }
+
+    .header-ctrls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .raden-badge {
+      background: #071018;
+      border: 1px solid #0d9488;
+      box-shadow: inset 0 0 8px rgba(45, 212, 191, 0.25);
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      color: #5eead4;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .btn-catalog {
+      background: linear-gradient(180deg, #a16207 0%, #713f12 100%);
+      color: #fef08a;
+      border: 1px solid #facc15;
+      border-radius: 4px;
+      padding: 5px 14px;
+      font-family: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 0.82rem;
+      box-shadow: 0 2px 0 #3a1d06;
+      transition: all 0.1s ease;
+      white-space: nowrap;
+    }
+
+    .btn-catalog:hover { background: #ca8a04; }
+    .btn-catalog:active { transform: translateY(2px); box-shadow: none; }
+
+    /* Stage Canvas Content */
+    .stage-content {
+      flex: 1;
+      padding: 10px 22px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-y: auto;
+    }
+
+    .part-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      align-self: flex-start;
+      background: linear-gradient(90deg, #064e3b 0%, #0f766e 100%);
+      color: #ccfbf1;
+      border-left: 4px solid #2dd4bf;
+      padding: 3px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border-radius: 2px;
+      margin-bottom: 6px;
+      flex-shrink: 0;
+    }
+
+    /* Complex Scenic Artwork Viewport */
+    .zen-illustration-box {
+      width: 100%;
+      height: 138px;
+      background: #04070c;
+      border: 2px solid #ca8a04;
+      border-radius: 6px;
+      box-shadow: inset 0 0 16px rgba(0,0,0,0.85), 0 4px 12px rgba(0,0,0,0.4);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .zen-illustration-box svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Question Slate */
+    .question-slate {
+      background: #0d1522;
+      border: 2px solid #29384d;
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: #f8fafc;
+      line-height: 1.45;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      margin-bottom: 8px;
+      flex-shrink: 0;
+    }
+
+    .question-num {
+      color: #38bdf8;
+      font-size: 1.3rem;
+      margin-right: 8px;
+      font-family: 'Yuji Boku', serif;
+    }
+
+    /* 4-Option Grid (2x2 Layout) */
+    .choices-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-shrink: 0;
+    }
+
+    .choice-tile {
+      background: #111a28;
+      border: 2px solid #1e324a;
+      border-radius: 6px;
+      padding: 11px 14px;
+      font-family: inherit;
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      box-shadow: 0 3px 0 #080d14, 0 3px 6px rgba(0,0,0,0.3);
+      transition: all 0.15s ease;
+    }
+
+    .choice-tile:hover:not([disabled]) {
+      background: #19263a;
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+    }
+
+    .choice-tile:active:not([disabled]) {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #080d14;
+    }
+
+    .tile-index {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #1a2536;
+      border: 1px solid #475569;
+      color: #fde047;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .choice-tile.wrong {
+      background: #450a0a !important;
+      border-color: #ef4444 !important;
+      color: #fca5a5 !important;
+      animation: zenShake 0.35s ease;
+      opacity: 0.85;
+    }
+
+    @keyframes zenShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    .choice-tile.correct {
+      background: #064e3b !important;
+      border-color: #10b981 !important;
+      color: #a7f3d0 !important;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.45) !important;
+    }
+
+    .choice-tile.correct .tile-index {
+      background: #047857 !important;
+      color: #ffffff !important;
+      border-color: #34d399 !important;
+    }
+
+    /* Explanation Scroll */
+    .scroll-explanation {
+      display: none;
+      background: #0c1420;
+      border: 2px solid #ca8a04;
+      border-radius: 6px;
+      padding: 10px 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+      animation: unrollScroll 0.35s ease-out;
+      margin-top: 2px;
+      margin-bottom: 8px;
+    }
+
+    @keyframes unrollScroll {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .scroll-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #fde047;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+      border-bottom: 1px dashed #ca8a04;
+      padding-bottom: 2px;
+    }
+
+    .scroll-body {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+
+    /* Footer Navigation */
+    .zen-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .hint-alert {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #f87171;
+      min-height: 20px;
+    }
+
+    .btn-next {
+      background: linear-gradient(180deg, #15803d 0%, #166534 100%);
+      color: #ffffff;
+      border: 2px solid #ca8a04;
+      border-radius: 6px;
+      padding: 8px 22px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #052e16, 0 6px 15px rgba(0,0,0,0.3);
+      display: none;
+      transition: all 0.1s ease;
+      white-space: nowrap;
+    }
+
+    .btn-next:hover { background: #16a34a; }
+    .btn-next:active { transform: translateY(2px); box-shadow: 0 2px 0 #052e16; }
+
+    /* Catalog Drawer */
+    .catalog-modal {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(3, 6, 10, 0.92);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 100;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .catalog-board {
+      background: #0a111a;
+      width: 100%;
+      max-width: 780px;
+      max-height: 85%;
+      border: 2px solid #ca8a04;
+      box-shadow: 0 0 25px rgba(202, 138, 4, 0.25);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .catalog-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #ca8a04;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+
+    .catalog-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #fde047;
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 6px;
+      overflow-y: auto;
+      padding: 4px;
+      flex: 1;
+    }
+
+    .q-pill {
+      background: #111a28;
+      border: 1px solid #1e324a;
+      border-radius: 4px;
+      padding: 6px 0;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: #94a3b8;
+      transition: all 0.1s ease;
+    }
+
+    .q-pill:hover { background: #19263a; color: #fde047; }
+    .q-pill.cleared { background: #064e3b; border-color: #10b981; color: #6ee7b7; }
+    .q-pill.active { background: #854d0e; color: #fef08a; border-color: #facc15; }
+
+    .btn-close-catalog {
+      background: #334155;
+      color: #ffffff;
+      border: 1px solid #64748b;
+      padding: 5px 14px;
+      font-family: inherit;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    /* Start / Finish Screens */
+    .splash-screen {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #070c14;
+      background-image: radial-gradient(circle at center, #0f1827 0%, #05080d 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 24px;
+      z-index: 50;
+    }
+
+    .splash-title {
+      font-family: 'Yuji Boku', serif;
+      font-size: 2.8rem;
+      color: #fde047;
+      margin: 8px 0;
+      letter-spacing: 4px;
+      text-shadow: 0 0 18px rgba(250, 204, 21, 0.4);
+    }
+
+    .splash-subtitle {
+      font-size: 1.15rem;
+      color: #5eead4;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .btn-start {
+      background: linear-gradient(180deg, #15803d 0%, #166534 100%);
+      color: #ffffff;
+      border: 2px solid #facc15;
+      border-radius: 8px;
+      padding: 14px 40px;
+      font-family: inherit;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #052e16, 0 10px 25px rgba(0,0,0,0.5);
+      transition: all 0.15s ease;
+    }
+
+    .btn-start:active { transform: translateY(3px); box-shadow: 0 2px 0 #052e16; }
+
+    /* ========================================================
+       RESPONSIVE ADAPTATION:
+       Mobile Phones: Adapts to Vertical 9:16 layout
+       ======================================================== */
+    @media screen and (max-width: 650px), screen and (orientation: portrait) and (max-device-width: 800px) {
+      .zen-viewport {
+        width: min(96vw, calc(96vh * 9 / 16));
+        height: min(calc(96vw * 16 / 9), 96vh);
+        aspect-ratio: 9 / 16;
+        max-width: 480px;
+        border-width: 6px;
+        box-shadow: 
+          0 0 0 2px #d4af37,
+          0 0 0 5px #05080d,
+          0 12px 30px rgba(0, 0, 0, 0.95);
+      }
+
+      .zen-header { padding: 6px 10px; }
+      .zen-logo { font-size: 0.92rem; gap: 6px; }
+      .zen-logo svg { width: 20px; height: 20px; }
+      .raden-badge { font-size: 0.72rem; padding: 3px 6px; }
+      .btn-catalog { font-size: 0.72rem; padding: 3px 8px; }
+      .stage-content { padding: 8px 12px; }
+      .part-banner { font-size: 0.72rem; padding: 2px 8px; margin-bottom: 5px; }
+      .zen-illustration-box { height: 85px; margin-bottom: 6px; }
+      .question-slate { font-size: 1.02rem; padding: 8px 12px; margin-bottom: 6px; line-height: 1.4; }
+      .question-num { font-size: 1.15rem; }
+      .choices-grid { grid-template-columns: 1fr; gap: 6px; margin-bottom: 6px; }
+      .choice-tile { font-size: 0.92rem; padding: 8px 12px; }
+      .tile-index { width: 22px; height: 22px; font-size: 0.75rem; }
+      .scroll-explanation { padding: 8px 12px; margin-bottom: 6px; }
+      .scroll-title { font-size: 0.88rem; }
+      .scroll-body { font-size: 0.82rem; line-height: 1.45; }
+      .btn-next { font-size: 0.88rem; padding: 7px 16px; }
+      .hint-alert { font-size: 0.78rem; }
+      .catalog-grid { grid-template-columns: repeat(5, 1fr); gap: 5px; }
+      .catalog-title { font-size: 1.05rem; }
+      .splash-title { font-size: 2.1rem; }
+      .splash-subtitle { font-size: 0.95rem; margin-bottom: 20px; }
+      .btn-start { font-size: 1.1rem; padding: 12px 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glowing Fireflies Canvas -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <div class="zen-viewport">
+    
+    <!-- Top Indigo Header -->
+    <header class="zen-header">
+      <div class="zen-logo">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9" fill="none" stroke="#facc15" stroke-width="2"/>
+          <path d="M12 3 A9 9 0 0 0 21 12 A9 9 0 1 1 12 3 Z" fill="#facc15"/>
+        </svg>
+        <span>幽玄の庵 〜百問全方位攻堅絵巻〜</span>
+      </div>
+      <div class="header-ctrls">
+        <span class="raden-badge" id="hud-progress">第 1 / 100 題</span>
+        <span class="raden-badge" id="hud-score" style="color: #facc15;">初手正解: 0</span>
+        <button class="btn-catalog" onclick="openCatalog()">目録 ☰</button>
+      </div>
+    </header>
+
+    <!-- Question Stage Content -->
+    <main class="stage-content" id="game-stage">
+      <div class="part-banner" id="part-tag">第 1 部：格助詞與副助詞專項</div>
+      
+      <!-- Thematic High-Detail SVG Art Box -->
+      <div class="zen-illustration-box" id="illustration-container"></div>
+
+      <!-- Question Slate -->
+      <div class="question-slate" id="question-box">
+        <span class="question-num" id="q-num">問1.</span>
+        <span id="q-text">問題読み込み中...</span>
+      </div>
+
+      <div class="choices-grid" id="choices-container"></div>
+
+      <div class="scroll-explanation" id="explanation-scroll">
+        <div class="scroll-title">📜 幽玄文法指南・詳細解説</div>
+        <div class="scroll-body" id="explanation-text"></div>
+      </div>
+
+      <footer class="zen-footer">
+        <div class="hint-alert" id="hint-msg"></div>
+        <button class="btn-next" id="next-btn" onclick="nextQuestion()">次の修練へ進む ➜</button>
+      </footer>
+    </main>
+
+    <!-- Clean Start Splash Screen -->
+    <div class="splash-screen" id="start-screen">
+      <svg width="76" height="76" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="1.5" style="margin-bottom: 12px;">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 2a10 10 0 0 0 7.07 17.07A10 10 0 1 1 12 2z" fill="#facc15"/>
+      </svg>
+      <h1 class="splash-title">日本語文法 幽玄の庵</h1>
+      <p class="splash-subtitle">『大家的日本語』第 26〜50 課 全 100 題 攻堅絵巻</p>
+      <button class="btn-start" onclick="startGame()">入庵・修練開始</button>
+    </div>
+
+    <!-- Finish Screen -->
+    <div class="splash-screen" id="finish-screen" style="display:none;">
+      <div style="font-size: 3.5rem; margin-bottom: 6px;">✨ 満願成就 ✨</div>
+      <h1 class="splash-title" style="color: #38bdf8;">百問完遂・全方位制覇！</h1>
+      <p class="splash-subtitle" id="finish-summary"></p>
+      <button class="btn-start" onclick="restartGame()">再び修練に挑む 🔄</button>
+    </div>
+
+    <!-- Catalog Drawer Modal -->
+    <div class="catalog-modal" id="catalog-modal">
+      <div class="catalog-board">
+        <div class="catalog-head">
+          <div class="catalog-title">📜 幽玄修練目録（全百問）</div>
+          <button class="btn-close-catalog" onclick="closeCatalog()">閉じる ✕</button>
+        </div>
+        <div class="catalog-grid" id="catalog-pills"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* Traditional Web Audio Synthesizer */
+    let audioCtx = null;
+
+    function initAudio() {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      } catch(e) {}
+    }
+
+    function playBambooClack() {
+      if (!audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(320, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.12);
+      } catch(e) {}
+    }
+
+    function playHyoshigi() {
+      if (!audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1600, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(700, audioCtx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.35, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.08);
+      } catch(e) {}
+    }
+
+    function playRinBell() {
+      if (!audioCtx) return;
+      try {
+        const freqs = [587.33, 880.00, 1174.66];
+        freqs.forEach((f, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(f, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.18 / (i + 1), audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 1.2);
+        });
+      } catch(e) {}
+    }
+
+    /* 
+       Question-Specific Vector Visual Engine:
+       Constructs context-specific vectors directly corresponding to every question's meaning
+    */
+    function renderQuestionArtwork(qId, caption) {
+      const defs = `
+        <defs>
+          <linearGradient id="gDawn" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#020617"/><stop offset="50%" stop-color="#1e1b4b"/><stop offset="100%" stop-color="#3b0764"/></linearGradient>
+          <linearGradient id="gZenBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#090e17"/><stop offset="60%" stop-color="#0f1d30"/><stop offset="100%" stop-color="#1a2e4c"/></linearGradient>
+          <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ca8a04"/><stop offset="50%" stop-color="#fef08a"/><stop offset="100%" stop-color="#ca8a04"/></linearGradient>
+          <pattern id="patRipples" width="24" height="12" patternUnits="userSpaceOnUse"><path d="M 0,12 Q 12,0 24,12" fill="none" stroke="#38bdf8" stroke-width="0.8" opacity="0.25"/></pattern>
+        </defs>
+      `;
+
+      function getVisualElements(id) {
+        switch(id) {
+          case 1:
+            return `<rect width="480" height="136" fill="url(#gZenBlue)"/>
+              <ellipse cx="240" cy="98" rx="140" ry="25" fill="#1e1814" stroke="#78350f" stroke-width="3"/>
+              <rect x="150" y="55" width="65" height="35" rx="6" fill="#d97706" stroke="#451a03" stroke-width="2"/>
+              <rect x="175" y="65" width="16" height="14" fill="#fef08a"/>
+              <ellipse cx="270" cy="72" rx="26" ry="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+              <circle cx="270" cy="72" r="10" fill="#f59e0b"/>
+              <path d="M330,68 C325,55 340,50 335,38" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.6"/>`;
+
+          case 2:
+            return `<rect width="480" height="136" fill="#120c18"/>
+              <rect x="180" y="15" width="120" height="85" fill="#2d132c" stroke="#d4af37" stroke-width="2"/>
+              <circle cx="240" cy="38" r="14" fill="#fed7aa"/>
+              <path d="M226,52 Q240,46 254,52 L260,86 L220,86 Z" fill="#e11d48"/>
+              <rect x="230" y="62" width="20" height="10" fill="#facc15"/>
+              <path d="M190,25 Q205,10 220,22" stroke="#f472b6" stroke-width="1.5" fill="none"/>`;
+
+          case 3:
+            return `<rect width="480" height="136" fill="#090e17"/>
+              <rect x="120" y="10" width="240" height="30" fill="#1e293b"/>
+              <path d="M130,40 L130,10 L170,10 L170,40 Z M180,40 L180,10 L220,10 L220,40 Z M230,40 L230,10 L270,10 L270,40 Z" fill="#1e3a8a"/>
+              <path d="M225,50 Q235,50 238,65 Q245,85 235,95 L215,95 Q205,85 212,65 Z" fill="#f8fafc" stroke="#0284c7" stroke-width="2"/>
+              <ellipse cx="265" cy="85" rx="12" ry="8" fill="#f8fafc" stroke="#0284c7" stroke-width="1.5"/>
+              <circle cx="240" cy="70" r="26" fill="none" stroke="#ef4444" stroke-width="4"/>
+              <line x1="222" y1="52" x2="258" y2="88" stroke="#ef4444" stroke-width="4"/>`;
+
+          case 4:
+            return `<rect width="480" height="136" fill="#0c111c"/>
+              <line x1="60" y1="65" x2="420" y2="65" stroke="#94a3b8" stroke-width="5"/>
+              <line x1="200" y1="20" x2="260" y2="85" stroke="#f1f5f9" stroke-width="6" stroke-linecap="round"/>
+              <line x1="260" y1="20" x2="200" y2="85" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"/>
+              <circle cx="230" cy="52" r="5" fill="#facc15"/>
+              <circle cx="230" cy="65" r="14" fill="#fef08a" opacity="0.3"/>
+              <line x1="230" y1="65" x2="245" y2="50" stroke="#facc15" stroke-width="2"/>`;
+
+          case 5:
+            return `<rect width="480" height="136" fill="url(#gZenBlue)"/>
+              <polygon points="170,55 220,38 220,82 170,65" fill="#ca8a04"/>
+              <rect x="150" y="55" width="20" height="10" fill="#78350f"/>
+              <path d="M235,46 Q255,60 235,74" fill="none" stroke="#38bdf8" stroke-width="3"/>
+              <path d="M250,38 Q280,60 250,82" fill="none" stroke="#38bdf8" stroke-width="3.5"/>
+              <path d="M265,30 Q305,60 265,90" fill="none" stroke="#38bdf8" stroke-width="4"/>`;
+
+          case 7:
+            return `<rect width="480" height="136" fill="url(#gDawn)"/>
+              <ellipse cx="240" cy="115" rx="180" ry="40" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="6,4"/>
+              <path d="M190,45 L250,45 L270,35 L260,45 L290,45 L295,40 L300,45 L290,50 L260,50 L240,65 L235,65 L245,50 L190,50 Z" fill="#f8fafc"/>
+              <circle cx="150" cy="65" r="20" fill="#0f172a" stroke="#ca8a04" stroke-width="2"/>
+              <text x="150" y="70" font-size="12" fill="#fde047" text-anchor="middle">旅券</text>`;
+
+          case 9:
+            return `<rect width="480" height="136" fill="#0f172a"/>
+              <rect x="140" y="25" width="90" height="75" rx="3" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+              <line x1="155" y1="42" x2="215" y2="42" stroke="#64748b" stroke-width="2"/>
+              <line x1="155" y1="56" x2="215" y2="56" stroke="#64748b" stroke-width="2"/>
+              <line x1="155" y1="70" x2="195" y2="70" stroke="#64748b" stroke-width="2"/>
+              <rect x="260" y="25" width="80" height="75" rx="4" fill="#1e293b" stroke="#ca8a04" stroke-width="2"/>
+              <rect x="260" y="25" width="80" height="22" fill="#ca8a04"/>
+              <text x="300" y="40" font-size="11" fill="#000" text-anchor="middle" font-weight="bold">金 曜 日</text>
+              <circle cx="300" cy="70" r="16" fill="none" stroke="#ef4444" stroke-width="3"/>`;
+
+          case 10:
+            return `<rect width="480" height="136" fill="#020617"/>
+              <rect x="0" y="70" width="480" height="66" fill="#1e293b"/>
+              <line x1="0" y1="102" x2="480" y2="102" stroke="#facc15" stroke-width="2" stroke-dasharray="25,15"/>
+              <rect x="80" y="80" width="55" height="18" rx="4" fill="#0f172a"/><circle cx="132" cy="88" r="4" fill="#ef4444" filter="drop-shadow(0 0 4px #dc2626)"/>
+              <rect x="175" y="80" width="60" height="18" rx="4" fill="#0f172a"/><circle cx="232" cy="88" r="4" fill="#ef4444" filter="drop-shadow(0 0 4px #dc2626)"/>
+              <rect x="270" y="80" width="55" height="18" rx="4" fill="#0f172a"/><circle cx="322" cy="88" r="4" fill="#ef4444" filter="drop-shadow(0 0 4px #dc2626)"/>
+              <circle cx="390" cy="38" r="22" fill="#090e17" stroke="#38bdf8" stroke-width="2"/>
+              <line x1="390" y1="38" x2="390" y2="24" stroke="#38bdf8" stroke-width="2"/><line x1="390" y1="38" x2="402" y2="38" stroke="#38bdf8" stroke-width="2"/>`;
+
+          case 15:
+            return `<rect width="480" height="136" fill="#1c1917"/>
+              <ellipse cx="240" cy="88" rx="75" ry="18" fill="#78350f"/>
+              <path d="M175,70 Q240,110 305,70 Z" fill="#f8fafc" stroke="#dc2626" stroke-width="3"/>
+              <path d="M195,68 Q205,58 215,68 T235,68 T255,68 T275,68 T295,68" stroke="#f59e0b" stroke-width="3" fill="none"/>
+              <ellipse cx="240" cy="66" rx="16" ry="10" fill="#fef08a"/><circle cx="240" cy="66" r="6" fill="#f97316"/>
+              <line x1="280" y1="30" x2="250" y2="65" stroke="#ca8a04" stroke-width="3"/>`;
+
+          case 18:
+            return `<rect width="480" height="136" fill="url(#gZenBlue)"/>
+              <path d="M130,30 L165,30 L180,24 L175,30 L195,30 L198,27 L202,30 L195,33 L175,33 L160,42 L157,42 L163,33 L130,33 Z" fill="#ffffff"/>
+              <line x1="40" y1="31" x2="125" y2="31" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="10,6" opacity="0.6"/>
+              <rect x="0" y="86" width="480" height="50" fill="#334155"/>
+              <path d="M220,74 L380,74 Q425,74 445,86 L220,86 Z" fill="#f8fafc"/>
+              <path d="M220,78 L390,78 Q420,78 435,86 L220,86 Z" fill="#2563eb"/>`;
+
+          case 24:
+            return `<rect width="480" height="136" fill="#0a121c"/>
+              <rect x="80" y="30" width="120" height="60" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+              <rect x="100" y="45" width="20" height="20" fill="#fef08a"/>
+              <rect x="140" y="45" width="20" height="20" fill="#fef08a"/>
+              <rect x="310" y="35" width="45" height="55" rx="6" fill="#dc2626" stroke="#991b1b" stroke-width="2"/>
+              <rect x="320" y="45" width="25" height="6" fill="#000000"/>
+              <rect x="330" y="90" width="6" height="25" fill="#475569"/>
+              <path d="M200,85 Q260,95 310,85" stroke="#facc15" stroke-width="2" stroke-dasharray="6,4" fill="none"/>`;
+
+          case 26:
+            return `<rect width="480" height="136" fill="#090e17"/>
+              <rect x="0" y="85" width="480" height="51" fill="#1e293b"/>
+              <path d="M160,85 L180,62 L260,62 L290,75 L320,75 L325,85 Z" fill="#475569" stroke="#1e293b" stroke-width="2"/>
+              <polygon points="180,62 165,48 200,62" fill="#64748b"/>
+              <path d="M172,44 Q168,28 178,16" stroke="#94a3b8" stroke-width="2" fill="none" opacity="0.6"/>
+              <circle cx="190" cy="85" r="10" fill="#000"/><circle cx="285" cy="85" r="10" fill="#000"/>`;
+
+          case 36:
+            return `<rect width="480" height="136" fill="#020617"/>
+              <path d="M80,50 Q120,15 170,40 Q220,10 270,35 Q320,15 380,45 Q420,35 440,65 L60,65 Z" fill="#1e1b4b"/>
+              <polygon points="210,65 195,85 208,85 190,108 225,82 210,82" fill="#fef08a"/>
+              <line x1="120" y1="75" x2="105" y2="102" stroke="#38bdf8" stroke-width="2" opacity="0.6"/>
+              <line x1="280" y1="75" x2="265" y2="102" stroke="#38bdf8" stroke-width="2" opacity="0.6"/>
+              <line x1="360" y1="75" x2="345" y2="102" stroke="#38bdf8" stroke-width="2" opacity="0.6"/>`;
+
+          case 37:
+            return `<rect width="480" height="136" fill="#09101d"/>
+              <rect x="100" y="20" width="110" height="75" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+              <line x1="155" y1="50" x2="155" y2="95" stroke="#475569" stroke-width="2"/>
+              <polygon points="230,68 280,68 280,58 310,75 280,92 280,82 230,82" fill="#38bdf8"/>
+              <circle cx="370" cy="50" r="24" fill="#052e16" stroke="#22c55e" stroke-width="2"/>
+              <text x="370" y="55" font-size="12" fill="#86efac" text-anchor="middle">10分</text>`;
+
+          case 45:
+            return `<rect width="480" height="136" fill="#080e18"/>
+              <rect x="60" y="45" width="55" height="40" fill="#1e293b"/>
+              <rect x="75" y="30" width="25" height="15" fill="#dc2626"/>
+              <line x1="125" y1="65" x2="345" y2="65" stroke="#facc15" stroke-width="6"/>
+              <rect x="350" y="35" width="70" height="55" fill="#14532d"/>
+              <polygon points="385,15 340,35 430,35" fill="#78350f"/>
+              <text x="235" y="55" font-size="12" fill="#fde047" text-anchor="middle">直行</text>`;
+
+          case 48:
+            return `<rect width="480" height="136" fill="#030712"/>
+              <rect x="80" y="15" width="120" height="75" fill="#111827" stroke="#1f2937" stroke-width="2"/>
+              <line x1="140" y1="15" x2="140" y2="90" stroke="#1f2937" stroke-width="1.5"/>
+              <line x1="280" y1="0" x2="280" y2="45" stroke="#475569" stroke-width="2"/>
+              <ellipse cx="280" cy="50" rx="20" ry="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+              <circle cx="280" cy="54" r="5" fill="#374151"/>
+              <path d="M125,30 A12,12 0 0,0 137,54 A15,15 0 1,1 125,30 Z" fill="#facc15" opacity="0.8"/>`;
+
+          case 71:
+            return `<rect width="480" height="136" fill="#0f172a"/>
+              <rect x="60" y="10" width="360" height="85" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+              <line x1="60" y1="30" x2="420" y2="30" stroke="#64748b" stroke-width="3"/>
+              <circle cx="120" cy="40" r="8" fill="none" stroke="#facc15" stroke-width="2"/>
+              <circle cx="180" cy="40" r="8" fill="none" stroke="#facc15" stroke-width="2"/>
+              <circle cx="240" cy="40" r="8" fill="none" stroke="#facc15" stroke-width="2"/>
+              <circle cx="300" cy="40" r="8" fill="none" stroke="#facc15" stroke-width="2"/>
+              <ellipse cx="230" cy="98" rx="25" ry="10" fill="#020617"/>
+              <ellipse cx="240" cy="96" rx="24" ry="10" fill="#78350f" transform="rotate(-10, 240, 96)"/>
+              <path d="M255,80 L265,70 M265,85 L278,85 M258,95 L270,102" stroke="#f87171" stroke-width="2"/>`;
+
+          case 75:
+            return `<rect width="480" height="136" fill="#0b131e"/>
+              <rect x="140" y="40" width="45" height="50" rx="3" fill="#ca8a04"/>
+              <path d="M152,40 C152,25 173,25 173,40" fill="none" stroke="#78350f" stroke-width="3"/>
+              <polygon points="210,65 260,65 260,55 285,72 260,89 260,79 210,79" fill="#f59e0b"/>
+              <rect x="310" y="25" width="80" height="65" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+              <text x="350" y="55" font-size="11" fill="#fde047" text-anchor="middle">商 店</text>`;
+
+          case 82:
+            return `<rect width="480" height="136" fill="url(#gZenBlue)"/>
+              <rect x="0" y="80" width="480" height="56" fill="#0c1e34"/>
+              <line x1="0" y1="80" x2="480" y2="80" stroke="#1d4ed8" stroke-width="1.5"/>
+              <polygon points="240,16 237,20 243,20" fill="#facc15"/>
+              <polygon points="240,24 190,40 290,40" fill="#d97706"/>
+              <rect x="200" y="40" width="80" height="18" fill="#facc15" stroke="#78350f" stroke-width="1.5"/>
+              <polygon points="240,48 170,64 310,64" fill="#d97706"/>
+              <rect x="180" y="64" width="120" height="20" fill="#facc15" stroke="#78350f" stroke-width="1.5"/>
+              <line x1="240" y1="40" x2="240" y2="84" stroke="#78350f" stroke-width="1.5"/>`;
+
+          case 87:
+            return `<rect width="480" height="136" fill="#100b1a"/>
+              <ellipse cx="240" cy="98" rx="80" ry="20" fill="#facc15" opacity="0.3"/>
+              <polygon points="240,10 180,98 300,98" fill="#fef08a" opacity="0.15"/>
+              <rect x="237" y="45" width="6" height="45" fill="#cbd5e1"/>
+              <circle cx="240" cy="40" r="10" fill="#475569" stroke="#cbd5e1" stroke-width="2"/>
+              <text x="170" y="45" font-size="28" fill="#fde047">♪</text>
+              <text x="300" y="42" font-size="32" fill="#fde047">♫</text>`;
+
+          case 95:
+            return `<rect width="480" height="136" fill="#09111c"/>
+              <rect x="237" y="25" width="6" height="70" fill="#ca8a04"/>
+              <line x1="170" y1="35" x2="310" y2="35" stroke="#ca8a04" stroke-width="3"/>
+              <path d="M170,35 L150,70 L190,70 Z" fill="#1e293b" stroke="#ca8a04" stroke-width="1.5"/>
+              <path d="M310,35 L290,70 L330,70 Z" fill="#1e293b" stroke="#ca8a04" stroke-width="1.5"/>
+              <circle cx="240" cy="35" r="6" fill="#facc15"/>
+              <text x="240" y="85" font-size="14" fill="#38bdf8" text-anchor="middle">誠実</text>`;
+
+          case 96:
+            return `<rect width="480" height="136" fill="#160d1a"/>
+              <rect x="150" y="35" width="60" height="55" rx="6" fill="#db2777"/>
+              <circle cx="180" cy="30" r="8" fill="#f472b6"/>
+              <circle cx="250" cy="62" r="30" fill="none" stroke="#ef4444" stroke-width="5"/>
+              <line x1="228" y1="40" x2="272" y2="84" stroke="#ef4444" stroke-width="5"/>
+              <path d="M340,30 A18,18 0 0,0 358,66 A22,22 0 1,1 340,30 Z" fill="#fde047"/>`;
+
+          case 98:
+            return `<rect width="480" height="136" fill="#090d16"/>
+              <rect x="0" y="20" width="480" height="75" fill="#131d2c" stroke="#1e293b" stroke-width="2"/>
+              <rect x="60" y="32" width="100" height="45" rx="3" fill="#04070c"/>
+              <rect x="200" y="32" width="100" height="45" rx="3" fill="#04070c"/>
+              <line x1="0" y1="45" x2="480" y2="45" stroke="#ca8a04" stroke-width="3"/>
+              <path d="M260,45 C260,35 272,35 272,45 L272,90 L268,90" fill="none" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round"/>
+              <ellipse cx="270" cy="70" rx="14" ry="4" fill="#0284c7" transform="rotate(75, 270, 70)"/>`;
+
+          case 100:
+            return `<rect width="480" height="136" fill="url(#gZenBlue)"/>
+              <rect x="0" y="0" width="110" height="106" fill="#1e130c"/>
+              <rect x="370" y="0" width="110" height="106" fill="#1e130c"/>
+              <rect x="110" y="0" width="260" height="106" fill="#0f172a"/>
+              <path d="M110,75 Q240,60 370,80 L370,106 L110,106 Z" fill="#f1f5f9"/>
+              <polygon points="240,40 220,55 260,55" fill="#e2e8f0"/>
+              <rect x="232" y="55" width="16" height="22" fill="#475569"/>
+              <circle cx="160" cy="30" r="2.5" fill="#ffffff"/><circle cx="200" cy="50" r="2" fill="#ffffff"/><circle cx="300" cy="35" r="3" fill="#ffffff"/><circle cx="330" cy="65" r="2" fill="#ffffff"/>`;
+
+          default:
+            const patterns = [
+              `<rect width="480" height="136" fill="url(#gZenBlue)"/>
+               <circle cx="370" cy="40" r="26" fill="#fef08a" opacity="0.85"/>
+               <rect x="50" y="0" width="12" height="106" fill="#064e3b"/><line x1="50" y1="35" x2="62" y2="35" stroke="#022c22" stroke-width="2"/><line x1="50" y1="70" x2="62" y2="70" stroke="#022c22" stroke-width="2"/>
+               <path d="M62,35 Q100,20 120,32 Q95,42 62,35 Z" fill="#10b981"/>
+               <rect x="0" y="75" width="480" height="31" fill="#082f49"/><line x1="20" y1="88" x2="220" y2="88" stroke="#38bdf8" stroke-width="1" opacity="0.5"/>`,
+
+              `<rect width="480" height="136" fill="#090d16"/>
+               <rect x="0" y="35" width="480" height="71" fill="url(#patRipples)"/>
+               <ellipse cx="160" cy="68" rx="42" ry="22" fill="#334155" stroke="#1e293b" stroke-width="2"/>
+               <path d="M140,64 Q160,50 180,64 Z" fill="#047857" opacity="0.85"/>
+               <ellipse cx="320" cy="74" rx="30" ry="16" fill="#1e293b"/>`,
+
+              `<rect width="480" height="136" fill="#16120e"/>
+               <rect x="70" y="8" width="75" height="72" fill="#fdfbf7" stroke="#451a03" stroke-width="2"/>
+               <circle cx="107" cy="44" r="22" fill="none" stroke="#1c1917" stroke-width="5" stroke-dasharray="120,15"/>
+               <path d="M250,65 C235,55 235,40 255,36 C265,34 275,34 285,36 C305,40 305,55 290,65 Z" fill="#18181b" stroke="#000" stroke-width="1.5"/>
+               <path d="M265,30 Q260,15 268,6" stroke="#fef08a" stroke-width="1.5" fill="none" opacity="0.6"/>
+               <path d="M350,65 Q370,88 390,65 Z" fill="#1e1814" stroke="#d4af37" stroke-width="1.5"/>`
+            ];
+            return patterns[id % patterns.length];
+        }
+      }
+
+      return `
+        <svg viewBox="0 0 480 136" xmlns="http://www.w3.org/2000/svg">
+          ${defs}
+          ${getVisualElements(qId)}
+          <rect x="0" y="0" width="480" height="3" fill="url(#gGold)"/>
+          <rect x="0" y="106" width="480" height="30" fill="#090e17" opacity="0.95"/>
+          <line x1="0" y1="106" x2="480" y2="106" stroke="#ca8a04" stroke-width="1.5"/>
+          <g transform="translate(14, 110)">
+            <rect width="18" height="18" rx="2" fill="#042f2e" stroke="#2dd4bf" stroke-width="1"/>
+            <text x="9" y="13.5" font-family="'Yuji Boku', serif" font-size="11" fill="#5eead4" text-anchor="middle">庵</text>
+          </g>
+          <text x="240" y="125" font-family="'Zen Old Mincho', serif" font-size="12" fill="#fef08a" text-anchor="middle" font-weight="700" letter-spacing="3">${caption}</text>
+        </svg>
+      `;
+    }
+
+    const questionVisualMeta = {
+      1:  { theme: "tea_alcove",   caption: "【 朝 餉 の 膳 】" },
+      2:  { theme: "bamboo_moon",  caption: "【 旅 の 土 産 】" },
+      3:  { theme: "tea_alcove",   caption: "【 酒 宴 の 戒 め 】" },
+      4:  { theme: "karesansui",   caption: "【 剪 定 の 業 】" },
+      5:  { theme: "bamboo_moon",  caption: "【 堂 々 た る 声 】" },
+      6:  { theme: "karesansui",   caption: "【 夢 の 暖 簾 】" },
+      7:  { theme: "night_ferry",  caption: "【 故 郷 へ の 帰 路 】" },
+      8:  { theme: "tea_alcove",   caption: "【 物 音 の 気 配 】" },
+      9:  { theme: "karesansui",   caption: "【 締 切 の 刻 限 】" },
+      10: { theme: "night_ferry",  caption: "【 渋 滞 の 往 来 】" },
+      11: { theme: "tea_alcove",   caption: "【 茶 房 の 憩 い 】" },
+      12: { theme: "karesansui",   caption: "【 墨 書 の 訓 読 】" },
+      13: { theme: "bamboo_moon",  caption: "【 古 都 の 歴 史 】" },
+      14: { theme: "bamboo_moon",  caption: "【 喝 采 の 音 色 】" },
+      15: { theme: "tea_alcove",   caption: "【 麺 の 創 製 】" },
+      16: { theme: "tea_alcove",   caption: "【 醸 造 の 樽 】" },
+      17: { theme: "bamboo_moon",  caption: "【 木 造 の 匠 】" },
+      18: { theme: "night_ferry",  caption: "【 鉄 路 と 翼 】" },
+      19: { theme: "tea_alcove",   caption: "【 静 閑 の 門 閉 ざ し 】" },
+      20: { theme: "karesansui",   caption: "【 約 束 の 日 取 り 】" },
+      21: { theme: "bamboo_moon",  caption: "【 学 堂 の 人 影 】" },
+      22: { theme: "bamboo_moon",  caption: "【 試 練 の 学 堂 】" },
+      23: { theme: "tea_alcove",   caption: "【 兄弟 の 諍 い 】" },
+      24: { theme: "night_ferry",  caption: "【 飛 脚 と 書 状 】" },
+      25: { theme: "karesansui",   caption: "【 書 物 の 価 額 】" },
+      26: { theme: "night_ferry",  caption: "【 年 輪 と 走 行 】" },
+      27: { theme: "bamboo_moon",  caption: "【 登 竜 門 の 桜 】" },
+      28: { theme: "tea_alcove",   caption: "【 平 癒 の 快 復 】" },
+      29: { theme: "karesansui",   caption: "【 字 引 の 難 解 】" },
+      30: { theme: "night_ferry",  caption: "【 盛 況 の 賑 わ い 】" },
+      31: { theme: "night_ferry",  caption: "【 険 し き 峰 】" },
+      32: { theme: "bamboo_moon",  caption: "【 講 義 の 熱 誠 】" },
+      33: { theme: "night_ferry",  caption: "【 偶 の 旅 情 】" },
+      34: { theme: "tea_alcove",   caption: "【 街 角 の 馳 走 】" },
+      35: { theme: "tea_alcove",   caption: "【 薬 効 と 解 熱 】" },
+      36: { theme: "night_ferry",  caption: "【 今 に も 雨 天 】" },
+      37: { theme: "night_ferry",  caption: "【 旅 駅 の 到 着 】" },
+      38: { theme: "tea_alcove",   caption: "【 甘 味 の 暖 簾 】" },
+      39: { theme: "tea_alcove",   caption: "【 閑 静 な る 居 処 】" },
+      40: { theme: "karesansui",   caption: "【 鍛 錬 と 必 勝 】" },
+      41: { theme: "tea_alcove",   caption: "【 発 熱 の 診 察 】" },
+      42: { theme: "night_ferry",  caption: "【 往 来 の 戒 め 】" },
+      43: { theme: "karesansui",   caption: "【 辞 去 の 刻 限 】" },
+      44: { theme: "karesansui",   caption: "【 異 国 の 語 ら い 】" },
+      45: { theme: "night_ferry",  caption: "【 帰 路 の 辻 馬 車 】" },
+      46: { theme: "night_ferry",  caption: "【 疾 風 と 窓 】" },
+      47: { theme: "tea_alcove",   caption: "【 窓 辺 の 佇 ま い 】" },
+      48: { theme: "tea_alcove",   caption: "【 行 灯 の 灯 火 】" },
+      49: { theme: "bamboo_moon",  caption: "【 黒 板 の 控 え 】" },
+      50: { theme: "karesansui",   caption: "【 縁 側 の 腰 掛 け 】" },
+      51: { theme: "karesansui",   caption: "【 外 し の 作 法 】" },
+      52: { theme: "tea_alcove",   caption: "【 衣 冠 の 綻 び 】" },
+      53: { theme: "tea_alcove",   caption: "【 割 烹 の 予 約 】" },
+      54: { theme: "karesansui",   caption: "【 会 合 の 決 定 】" },
+      55: { theme: "karesansui",   caption: "【 刻 限 の 変 更 】" },
+      56: { theme: "night_ferry",  caption: "【 届 き し 書 留 】" },
+      57: { theme: "night_ferry",  caption: "【 懐 中 の 紛 失 】" },
+      58: { theme: "tea_alcove",   caption: "【 袂 の 隙 間 】" },
+      59: { theme: "tea_alcove",   caption: "【 茶 釜 の 沸 騰 】" },
+      60: { theme: "tea_alcove",   caption: "【 清 掃 の 座 敷 】" },
+      61: { theme: "bamboo_moon",  caption: "【 雅 な る 絃 歌 】" },
+      62: { theme: "night_ferry",  caption: "【 健 脚 の 道 程 】" },
+      63: { theme: "tea_alcove",   caption: "【 庖 丁 の 冴 え 】" },
+      64: { theme: "tea_alcove",   caption: "【 門 出 の 錠 前 】" },
+      65: { theme: "tea_alcove",   caption: "【 台 所 の 助 け 】" },
+      66: { theme: "bamboo_moon",  caption: "【 祝 賀 の 契 り 】" },
+      67: { theme: "bamboo_moon",  caption: "【 異 郷 の 独 り 居 】" },
+      68: { theme: "tea_alcove",   caption: "【 夜 更 け の 養 生 】" },
+      69: { theme: "night_ferry",  caption: "【 来 朝 の 記 憶 】" },
+      70: { theme: "karesansui",   caption: "【 辞 書 の 功 徳 】" },
+      71: { theme: "night_ferry",  caption: "【 満 員 の 汽 車 】" },
+      72: { theme: "tea_alcove",   caption: "【 留 守 居 の 災 難 】" },
+      73: { theme: "night_ferry",  caption: "【 驟 雨 と 傘 】" },
+      74: { theme: "tea_alcove",   caption: "【 幼 子 の 涙 】" },
+      75: { theme: "night_ferry",  caption: "【 兄 の 命 令 】" },
+      76: { theme: "night_ferry",  caption: "【 荷 駄 の 助 勢 】" },
+      77: { theme: "karesansui",   caption: "【 主 命 の 伝 達 】" },
+      78: { theme: "karesansui",   caption: "【 師 の 恩 寵 】" },
+      79: { theme: "bamboo_moon",  caption: "【 庭 前 の 散 水 】" },
+      80: { theme: "karesansui",   caption: "【 添 え 状 の 墨 跡 】" },
+      81: { theme: "night_ferry",  caption: "【 送 迎 の 車 駕 】" },
+      82: { theme: "bamboo_moon",  caption: "【 金 閣 の 偉 容 】" },
+      83: { theme: "bamboo_moon",  caption: "【 巨 匠 の 筆 致 】" },
+      84: { theme: "night_ferry",  caption: "【 荷 担ぎ の 志 】" },
+      85: { theme: "tea_alcove",   caption: "【 実 家 へ の 伝 言 】" },
+      86: { theme: "night_ferry",  caption: "【 天 候 の 予 報 】" },
+      87: { theme: "bamboo_moon",  caption: "【 歌 手 の 如 き 響 き 】" },
+      88: { theme: "tea_alcove",   caption: "【 銘 菓 の 誘 惑 】" },
+      89: { theme: "karesansui",   caption: "【 劇 場 の 噂 】" },
+      90: { theme: "night_ferry",  caption: "【 汽 車 へ の 乗 車 】" },
+      91: { theme: "tea_alcove",   caption: "【 昼 餉 の 満 福 】" },
+      92: { theme: "night_ferry",  caption: "【 日 出 づ る 国 へ 】" },
+      93: { theme: "tea_alcove",   caption: "【 絡 繰 り の 故 障 】" },
+      94: { theme: "karesansui",   caption: "【 異 国 滞 在 の 証 】" },
+      95: { theme: "bamboo_moon",  caption: "【 誠 実 の 人 格 】" },
+      96: { theme: "tea_alcove",   caption: "【 養 生 の 節 制 】" },
+      97: { theme: "night_ferry",  caption: "【 転 勤 の 辞 令 】" },
+      98: { theme: "night_ferry",  caption: "【 忘 れ 傘 の 悔 い 】" },
+      99: { theme: "night_ferry",  caption: "【 北 国 の 旅 情 】" },
+      100:{ theme: "night_ferry",  caption: "【 一 面 の 銀 世 界 】" }
+    };
+
+    const rawParts = [
+      {
+        partName: "第 1 部：格助詞與副助詞專項",
+        questions: [
+          { id: 1, q: "今日の 朝ごはん（ ）パンと 卵を 食べました。", options: ["を", "に", "で", "が"], ans: 2, exp: "文末に「パンと卵を」とあり、直接目的語（ヲ格）が既に提示されています。ここでの「に」は「〜として、〜の位置づけで」という役割・名目を表します（朝ごはんにパンと卵を食べた）。1の「を」を入れると二重ヲ格の禁止に抵触します。" },
+          { id: 2, q: "日本旅行の お土産（ ）きれいな 人形を 買いました。", options: ["で", "を", "に", "と"], ans: 3, exp: "問1と同様、名目・目的を表す格助詞「に」を用います（お土産に人形を買った＝手土産として購入した）。" },
+          { id: 3, q: "夫は お酒（ ）全然 飲めません。", options: ["を", "が", "に", "で"], ans: 2, exp: "可能動詞「飲める（飲めない）」が表す能力・可能の対象は、原則として助詞「が」で示します（お酒が飲めない）。動作そのものを表す他動詞の場合のみ「お酒を飲む」となります。" },
+          { id: 4, q: "この ハサミは、硬い 針金を 切る（ ）使います。", options: ["のを", "のに", "のは", "のが"], ans: 2, exp: "道具や行為の用途・目的を表す定型構文は「動詞辞書形＋のに＋使う / 役に立つ / 便利だ / 時間がかかる」です。したがって「切るのに使います」が正解です。" },
+          { id: 5, q: "後ろの 人にも 聞こえる（ ）、大きな 声で 話してください。", options: ["ために", "ように", "のに", "ようにして"], ans: 2, exp: "「聞こえる」は無意志動詞（自然に耳に入る可能状態）です。無意志動詞・可能動詞・否定形を受けて「ある状態が実現するように」と目的を表す場合は「〜ように」を用います。" },
+          { id: 6, q: "自分の 店を 持つ（ ）、一生懸命 お金を 貯めて います。", options: ["ために", "ように", "のに", "ことに"], ans: 1, exp: "「店を持つ」は話者の明確な人為的意志動詞であり、前後件の主語も同一（私）です。明確な目的・目標に向かって行動する場合は「動詞辞書形＋ために」を用います。" },
+          { id: 7, q: "私は 1年（ ）2回、国へ 帰ります。", options: ["が", "を", "に", "で"], ans: 3, exp: "頻度や割合の基準を表す構文は「［期間］に［回数］」です（1年に2回）。数量詞「2回」の後ろではなく、「1年」の直後に格助詞「に」を置きます。" },
+          { id: 8, q: "家の 前で、変な 音（ ）しましたよ。", options: ["を", "が", "に", "で"], ans: 2, exp: "五感（聴覚・嗅覚・味覚など）で知覚される客観的現象を表す慣用表現は「音 / 声 / におい / 味が する」であり、主格助詞「が」を固定で用います。" },
+          { id: 9, q: "レポートは 今週の 金曜日（ ）出さなければ なりません。", options: ["まで", "までに", "のに", "から"], ans: 2, exp: "後件が「出さなければならない（提出する）」という一回性の完了動作であるため、動作を完了すべき最終期限（デッドライン）を表す「までに」が正解です。" },
+          { id: 10, q: "道が ひどく 混んで いて、会社まで 2時間（ ）かかって しまった。", options: ["で", "に", "も", "を"], ans: 3, exp: "動詞「かかる」は所要時間を表す際に直接数量詞をとります。ここでは渋滞により「2時間もかかってしまった」と、所要時間が予想外に長かったことに対する驚きや不満を強調するため、副助詞「も」を用います。" },
+          { id: 11, q: "時間が あったら、喫茶店で お茶（ ）飲みませんか。", options: ["なら", "でも", "ため", "ほど"], ans: 2, exp: "相手に対して極端ではない一例を挙げ、「〜などはいかがですか」と柔らかく提案・勧誘する副助詞は「でも」です（お茶でも飲みませんか）。" },
+          { id: 12, q: "すみません、この 漢字は ひらがなで 何（ ）読みますか。", options: ["を", "で", "と", "に"], ans: 3, exp: "読み方、発言、引用の内容を示す助詞は「と」です（何と読みますか）。" },
+          { id: 13, q: "妹は 日本の 歴史や 文化（ ）とても 興味が あります。", options: ["を", "に", "で", "が"], ans: 2, exp: "関心や興味が向かう対象は格助詞「に」で提示します（〜に興味がある）。" },
+          { id: 14, q: "この 歌手は 若い 女性（ ）とても 人気があります。", options: ["を", "に", "で", "と"], ans: 2, exp: "支持や人気の受け手・対象を表す場合は格助詞「に」を用います（若い女性に人気がある）。" },
+          { id: 15, q: "チキンラーメンは 安藤百福さん（ ）よって 発明されました。", options: ["に", "で", "から", "を"], ans: 1, exp: "建造・発明・発見などの受身文において、その行為者・創造者を示す表現は「〜によって」です。" },
+          { id: 16, q: "日本酒は 米（ ）造られます。", options: ["で", "から", "に", "を"], ans: 2, exp: "原料の形状や性質が化学的に変化し、完成品から元の素材が一目で分からない場合は「から」を用います（米から日本酒を造る）。" },
+          { id: 17, q: "昔の 日本の 家は 木（ ）造られました。", options: ["から", "で", "に", "を"], ans: 2, exp: "完成品を見ても元の素材がそのまま視覚的に判別できる材料（物理的加工）には「で」を用います（木で家を造る）。" },
+          { id: 18, q: "飛行機は 新幹線（ ）速いです。", options: ["より", "ほど", "くらい", "から"], ans: 1, exp: "比較の基準を示す表現は「〜より」です（新幹線より速い＝新幹線と比べて速い）。" },
+          { id: 19, q: "昨日は 日曜日でしたが、どこ（ ）出かけませんでした。", options: ["には", "でも", "へも", "をも"], ans: 3, exp: "疑問詞＋助詞＋「も」＋否定表現で全面否定を表します。移動の目的地を全面的に否定する場合は「どこへも（または どこにも）行きませんでした」となります。" },
+          { id: 20, q: "次の 会議は 来週の 月曜日（ ）しましょう。", options: ["で", "に", "を", "と"], ans: 2, exp: "選択肢の中から最終的に物事を決定・指定する文型は「名詞＋にする」です（月曜日にしましょう）。" },
+          { id: 21, q: "教室（ ）田中さんが いますよ。", options: ["で", "に", "を", "へ"], ans: 2, exp: "人や物が静止して存在する場所を表す存在動詞（いる／ある）の前には格助詞「に」を用います（教室に田中さんがいる）。" },
+          { id: 22, q: "教室（ ）みんなで 日本語の 試験を 受けました。", options: ["に", "で", "を", "へ"], ans: 2, exp: "積極的な動作・行為（試験を受ける）が行われる活動場所には格助詞「で」を用います（教室で試験を受けた）。" },
+          { id: 23, q: "ゲームの ことで、弟（ ）けんかして しまいました。", options: ["を", "に", "と", "で"], ans: 3, exp: "喧嘩、相談、握手など、相互に働きかけ合う相手を示す助詞は「と」です（弟とけんかした）。" },
+          { id: 24, q: "会社へ 行く（ ）で、ポストに 手紙を 出しました。", options: ["あいだ", "とちゅう", "まんなか", "なか"], ans: 2, exp: "移動プロセスの途中で特定の動作を行う場合は、場所・状況を表す助詞「で」を用いて「途中で」とします。「途中に」は「途中にコンビニがある」のように、静態的な存在・位置関係を示す場合に限られます。" },
+          { id: 25, q: "この 本を 買うなら、5,000円（ ）必要です。", options: ["は", "も", "で", "に"], ans: 1, exp: "数量詞に助詞「は」を接続させると、「最低でもそれだけは必要である」という最低限度の見積もりを表します（5,000円は必要です）。" }
+        ]
+      },
+      {
+        partName: "第 2 部：副詞呼應與句型搭配專項",
+        questions: [
+          { id: 26, q: "10年間 乗っていた 車が、（ ）動かなく なって しまいました。", options: ["やっと", "とうとう", "ようやく", "ぜひ"], ans: 2, exp: "長い経過の末に、好ましくない結果や不可逆的な事態に至った場合は「とうとう」を用います（とうとう動かなくなった）。1の「やっと」は望ましい結果の達成に用いるため不自然です。" },
+          { id: 27, q: "毎晩 勉強して、（ ）N4の 試験に 合格することが できました。", options: ["とうとう", "やっと", "ぜんぜん", "すっかり"], ans: 2, exp: "長期の苦労や努力が実を結び、待ち望んでいた事態が実現した文脈には「やっと」が適合します（努力して、やっと合格できた）。" },
+          { id: 28, q: "風邪を 引いて いましたが、薬を 飲んで もう（ ）元気になりました。", options: ["なかなか", "すっかり", "ほとんど", "ぜひ"], ans: 2, exp: "病気が完全に治癒し、元の健康な状態にすっかり戻った様子を表すコロケーションは「すっかり元気になる」です。" },
+          { id: 29, q: "難しい 漢字なので、辞書を 見ても（ ）覚えられません。", options: ["なかなか", "すっかり", "ずいぶん", "たまに"], ans: 1, exp: "「なかなか＋否定」で「容易には〜できない、期待通りに進まない」という意味を表します（なかなか覚えられない）。" },
+          { id: 30, q: "（ ）人気が あるなら、私も 一度 行ってみたいです。", options: ["どんなに", "そんなに", "どうやって", "そうやって"], ans: 2, exp: "前文の状況を指示副詞で受け、「それほどまでに」と条件形「〜なら」に接続するのは「そんなに」です。「どんなに」は逆接の「〜ても」と呼応します。" },
+          { id: 31, q: "（ ）大変でも、途中で 諦めないで ください。", options: ["そんなに", "どんなに", "どうして", "なかなか"], ans: 2, exp: "後件に逆接の条件「大変でも」があるため、「どれほど〜であっても」を表す「どんなに〜ても」の呼応関係が成立します。" },
+          { id: 32, q: "スミスさんは 授業中、いつも 先生の 話を（ ）聞いて います。", options: ["まっすぐに", "熱心に", "だいじに", "急に"], ans: 2, exp: "授業や講義に集中して真面目に取り組む態度を修飾する副詞は「熱心に」です。「まっすぐに」は物理的直進を表します。" },
+          { id: 33, q: "普段は 忙しいですが、（ ）友達と 旅行に 行きます。", options: ["たまに", "ずいぶん", "だいぶ", "ぜんぜん"], ans: 1, exp: "発生頻度が低いこと（思い出したように時折行うこと）を表す副詞は「たまに」です（たまに旅行に行く）。" },
+          { id: 34, q: "駅の 前に、新しい レストランが（ ）ありますよ。", options: ["だいぶ", "いっぱい", "ずいぶん", "すっかり"], ans: 2, exp: "人や店舗などの具象物が「数多く満ちている」状態を表す口語的副詞は「いっぱい（あります）」です。「だいぶ」は状態や程度の変化幅に用います。" },
+          { id: 35, q: "薬を 飲んだら、熱が（ ）下がって 楽に なりました。", options: ["いっぱい", "だいぶ", "たまに", "ぴったり"], ans: 2, exp: "体温や病状などの程度が「かなり、相当に」改善したことを表す場合は「だいぶ（下がった）」を用います。" },
+          { id: 36, q: "西の 空が 暗く なって、今（ ）雨が 降り出しそうです。", options: ["にも", "でも", "から", "まで"], ans: 1, exp: "事態が今すぐ発生しそうな兆候を表す様態構文の定型副詞は「今にも〜そうだ」です（今にも雨が降り出しそうだ）。" },
+          { id: 37, q: "（ ）今、会社を 出た ところですから、あと10分で 着きます。", options: ["さっき", "たった", "ちょうど", "もう"], ans: 2, exp: "直前の動作完了を表す「動詞た形＋ところ」と呼応する副詞は「たった今」です。「着いたところ…着きます」という重複を避け、出発から到着への自然な文脈に改めました。" },
+          { id: 38, q: "ケーキを 食べたいと 思いました。（ ）、有名な 店へ 行きました。", options: ["それに", "それで", "だから", "だけど"], ans: 2, exp: "前件の動機（食べたいと思った）から、自然に後件の行動（店へ行った）へ移行する順接の接続詞は「それで（そこで／そのため）」です。「それに」は情報の追加・添加を表します。" },
+          { id: 39, q: "この アパートは 駅から 近いです。（ ）、家賃も 安いです。", options: ["それで", "それに", "だけど", "すると"], ans: 2, exp: "前件の利点（駅から近い）に対し、さらに別の利点（家賃も安い）を付け加える累加・並列の接続詞は「それに」です。" },
+          { id: 40, q: "彼は 毎日 練習して いますから、明日の 試合は（ ）勝つでしょう。", options: ["もしかしたら", "きっと", "ぜひ", "たぶん"], ans: 2, exp: "推量の「〜でしょう」と結びつき、話者が強い確信（90%以上）を持っていることを示す副詞は「きっと」です。「もしかしたら」は「〜かもしれない」と呼応します。" },
+          { id: 41, q: "咳が 止まりません。（ ）、インフルエンザかも しれません。", options: ["きっと", "もしかしたら", "たいてい", "ぜったいに"], ans: 2, exp: "文末が不確実な推測を表す「〜かもしれない」であるため、確率が50%程度かそれ以下であることを示す副詞「もしかしたら」が呼応します。" },
+          { id: 42, q: "車を 運転する ときは、（ ）前を 見て 注意してください。", options: ["十分に", "そんなに", "だいぶ", "ぜひ"], ans: 1, exp: "「不足がないよう、しっかりと」注意を促す副詞は「十分に（注意する）」です。" },
+          { id: 43, q: "もう 10時半ですから、（ ）失礼します。", options: ["なかなか", "そろそろ", "ずっと", "たまに"], ans: 2, exp: "時刻や状況から判断して、次の行動に移るべき潮時であることを表す挨拶表現は「そろそろ失礼します」です。" },
+          { id: 44, q: "フランス語は 難しくて、（ ）分かりません。", options: ["あまり", "ぜんぜん", "たいへん", "もう"], ans: 2, exp: "否定表現「分かりません」と呼応し、「全く〜ない」と全面否定する副詞は「全然（ぜんぜん）」です。" },
+          { id: 45, q: "荷物が 重いので、郵便局から 家まで どこにも 寄らずに（ ）帰りました。", options: ["まっすぐ", "直接", "ちょうど", "ぜひ"], ans: 1, exp: "途中で寄り道をせず目的地へ直行する表現は「まっすぐ（帰る）」が正しいコロケーションです（初級第5課既出）。「直接」は「仲介者を挟まない（直接話す）」という意味で用いるため、帰宅の文脈では「まっすぐ」が最適です。" }
+        ]
+      },
+      {
+        partName: "第 3 部：自他動詞・アスペクト與狀態存續專項",
+        questions: [
+          { id: 46, q: "風が 強く 吹いて、窓が 急に（ ）しまいました。", options: ["しめて", "しまって", "しめられて", "しめさせて"], ans: 2, exp: "主語が「窓が」であり、自然の力（風）によってひとりでに閉まる現象を描写しているため、自動詞「閉まる」のて形「閉まって」を用います。" },
+          { id: 47, q: "寒いので、部屋の 窓を（ ）ください。", options: ["しまって", "しめて", "しまりまして", "しまれて"], ans: 2, exp: "目的語が「窓を」であり、人為的に対象を閉じるよう依頼しているため、他動詞「閉める」のて形「閉めて」を用います。" },
+          { id: 48, q: "出かける ときは、部屋の 電気が（ ）のを たしかめて ください。", options: ["けして いる", "きえて いる", "けして ある", "きえて ある"], ans: 2, exp: "主語が「電気が」であり、電気が消えた後の客観的な状態存続を表すため、「自動詞て形＋いる（消えている）」が正解です。" },
+          { id: 49, q: "黒板に、今日の 授業の 予定が（ ）あります。", options: ["書いて", "書かれて", "書いて いる", "書け"], ans: 1, exp: "「黒板に予定が〜ある」とあり、誰かが特定の目的（告知など）を持って行った行為の結果がそこにある状態を表すため、「他動詞て形＋ある（書いてある）」を用います。" },
+          { id: 50, q: "この 椅子は 足が（ ）いますから、座っては いけません。", options: ["こわして", "こわれて", "こわされて", "こわしてあって"], ans: 2, exp: "「足が」壊れた状態にあることを表すため、自動詞「壊れる」のて形＋います（壊れています）を用います。" },
+          { id: 51, q: "手を 洗う ときは、指輪を（ ）ほうが いいですよ。", options: ["はずれた", "はずした", "はずれて いる", "はずして ある"], ans: 2, exp: "「指輪を」と対象が示されているため、自らの意志で身につけているものを取る他動詞「外す」を用い、「外したほうがいい」とします。「外れる」は自動詞です。" },
+          { id: 52, q: "上着の ボタンが（ ）そうですよ。気をつけて ください。", options: ["とり", "とれ", "とる", "とれる"], ans: 2, exp: "ボタンが取れそうな物理的兆候を表す様態表現です。自動詞「取れる」のます形語幹「取れ」＋「そうだ」の形をとります。" },
+          { id: 53, q: "明日 行く レストランを、もう（ ）。", options: ["きまりました", "きめました", "きまってあります", "きまられました"], ans: 2, exp: "目的語が「レストランを」となっているため、話者の意志的選択を表す他動詞「決める（決めました）」を用います。" },
+          { id: 54, q: "来週の 会議の 時間が、もう（ ）。", options: ["きめました", "きまりました", "きめてあります", "きめられました"], ans: 2, exp: "主語が「時間が」となっているため、事柄が自然と確定したことを表す自動詞「決まる（決まりました）」を用います。" },
+          { id: 55, q: "用事が できたので、友達に 約束の 時間を（ ）もらった。", options: ["かわって", "かえて", "かわられて", "かえられて"], ans: 2, exp: "「時間を〜てもらう」は、相手に頼んで時間を変更してもらう構文です。目的語「時間を」をとる動作なので、他動詞「変える」のて形「変えて」を用います。" },
+          { id: 56, q: "昨日 注文した 本が、もう 家に（ ）。", options: ["とどけました", "とどきました", "とどけられました", "とどかれていました"], ans: 2, exp: "注文した品物が家に到着することは、物品自体の移動完了を表す自動詞「届く（届きました）」で表現します。「届ける」は配達側（他動詞）の行為です。" },
+          { id: 57, q: "歩いている とき、ポケットから 財布を（ ）しまいました。", options: ["おちて", "おとして", "おとされて", "おちられて"], ans: 2, exp: "「財布を」と目的語をとっているため、不注意により紛失させる他動詞「落とす」のて形＋しまう（落としてしまった）を用います。" },
+          { id: 58, q: "ポケットに 穴が あいて いたので、鍵が（ ）しまいました。", options: ["おとして", "おちて", "おとされて", "おちさせて"], ans: 2, exp: "「鍵が」と主語が示されており、重力により自然に落下した事態を表すため、自動詞「落ちる」のて形＋しまう（落ちてしまった）を用います。" },
+          { id: 59, q: "お湯が（ ）から、おいしい コーヒーを いれましょう。", options: ["わかした", "わいた", "わかしてある", "わかせた"], ans: 2, exp: "「お湯が」と主語が示されており、自然に沸騰点に達した状態を表すため、自動詞「沸く（沸いた）」を用います。「沸かす」は他動詞です。" },
+          { id: 60, q: "部屋が きれいに（ ）から、どうぞ 入って ください。", options: ["かたづけた", "かたづいた", "かたづけてある", "かたづけられた"], ans: 2, exp: "「部屋が」と主語が示されており、部屋が整然とした状態になったことを表すため、自動詞「片づく（片づいた）」を用います。「片づける」は他動詞です。" }
+        ]
+      },
+      {
+        partName: "第 4 部：動詞名詞化（のが・のを・のは）與強調構文專項",
+        questions: [
+          { id: 61, q: "私は 休みの日、一人で 音楽を 聴く（ ）大好きです。", options: ["のを", "のに", "のが", "のは"], ans: 3, exp: "述語が好悪を表す形容詞「大好きです」の場合、その対象は助詞「が」を要求するため、名詞化表現は「〜のが」となります（音楽を聴くのが大好きです）。" },
+          { id: 62, q: "山田さんは 足が 長いので、歩く（ ）とても 速いです。", options: ["のを", "のが", "のは", "のに"], ans: 2, exp: "動作の速度や身体的特徴を評価する述語（速い／遅い）の対象は「〜のが」で提示します（歩くのが速い）。" },
+          { id: 63, q: "兄は 美味しい 料理を 作る（ ）とても 上手です。", options: ["のを", "のに", "のが", "のは"], ans: 3, exp: "技能・巧拙を表す述語（上手だ／下手だ／得意だ／苦手だ）の対象は「〜のが」を用います（料理を作るのが上手だ）。" },
+          { id: 64, q: "急いで 家を 出たので、部屋の 鍵を 掛ける（ ）忘れました。", options: ["のを", "のが", "のは", "のに"], ans: 1, exp: "述語動詞が「忘れる」「思い出す」などの場合、忘れられた具体的な行為そのものが直接目的語となるため、「〜のを」を用います（鍵を掛けるのを忘れた）。" },
+          { id: 65, q: "母が 台所で 料理を 作る（ ）手伝いました。", options: ["のを", "のが", "のは", "のに"], ans: 1, exp: "「手伝う」の直接の援助対象となる行為は「〜のを」で表します（料理を作るのを手伝った）。" },
+          { id: 66, q: "田中さんが 来月 結婚する（ ）知って いますか。", options: ["のを", "のが", "のは", "のに"], ans: 1, exp: "事実の認識・知得を表す動詞「知っている」の目的語節は「〜のを」で提示します（結婚するのを知っていますか）。" },
+          { id: 67, q: "一人で 外国に 暮らす（ ）本当に 大変です。", options: ["のを", "のが", "のは", "のに"], ans: 3, exp: "「一人で暮らすこと」という行為全体を文の主題として取り立て、それに対する一般的・客観的な評価（大変だ）を述べる場合は「〜のは」を用います。" },
+          { id: 68, q: "夜遅くに 甘い 物を たくさん 食べる（ ）体に 悪いです。", options: ["のを", "のが", "のは", "のに"], ans: 3, exp: "前問と同様、行為全体を主題として提示し、客観的判断（体に悪い）を下す文型であるため、「〜のは」が正解です。" },
+          { id: 69, q: "私が 日本へ 来た（ ）去年の 3月です。", options: ["のを", "のが", "のは", "のに"], ans: 3, exp: "焦點強調構文（分裂文）「［既知の事柄節］のは［強調したい時間・場所・人］です」です（私が日本へ来たのは去年の3月です）。" },
+          { id: 70, q: "この 辞書は、漢字の 意味を 調べる（ ）とても 役に 立ちます。", options: ["のを", "のに", "のは", "のが"], ans: 2, exp: "「役に立つ」に対する用途・目的の基準を示す文型は「動詞辞書形＋のに（役に立つ）」です。" }
+        ]
+      },
+      {
+        partName: "第 5 部：ヴォイス（受身・使役・使役受身・授受動詞）專項",
+        questions: [
+          { id: 71, q: "満員電車の 中で、知らない 人に 足を（ ）痛かったです。", options: ["ふみました", "ふまれました", "ふませました", "ふんでくれました"], ans: 2, exp: "自分の身体の一部（足）を他人に踏まれ、不快・被害を被ったことを表す「持ち主の受身（迷惑受身）」です。構文：［被害者］は ［加害者］に ［身体・所有物］を ［受身動詞］ ➔ 足を踏まれました。" },
+          { id: 72, q: "留守の 間に、泥棒に パソコンを（ ）しまいました。", options: ["とらせて", "とられて", "とってもらって", "とってくれて"], ans: 2, exp: "泥棒によって所有物を奪われた被害受身です（泥棒にパソコンを取られてしまった）。1の「取らせて」は使役（泥棒に取らせた）となり不適です。" },
+          { id: 73, q: "傘を 持たずに 出かけて、途中で 雨に（ ）大変でした。", options: ["ふって", "ふられて", "ふらせて", "ふりて"], ans: 2, exp: "自動詞「降る」を用いた迷惑受身です。雨の降下という自然現象によって困惑・被害を受けたことを表すため、「雨に降られて」となります。" },
+          { id: 74, q: "いたずらをして、妹を（ ）母に 叱られました。", options: ["なかれて", "なかせて", "なきすぎて", "ないて"], ans: 2, exp: "妹の泣くという感情・動作を誘発・強制したため、使役動詞「泣かせる」のて形「泣かせて」を用います。" },
+          { id: 75, q: "子どもの ころ、よく 兄に 買い物（ ）行かされました。", options: ["を", "に", "で", "が"], ans: 2, exp: "移動の目的を表す構文は「［名詞］に 行く」です（買い物に行く）。使役受身形「行かされました（無理に行かされた）」に接続する場合も、目的の助詞は「に」を維持します。「買い物を＋行く」は文法的な誤りです。" },
+          { id: 76, q: "すみません、この 荷物を 運ぶのを 手伝って（ ）か。", options: ["あげません", "もらえません", "やりません", "いただきません"], ans: 2, exp: "相手に対して自分への援助を請う依頼表現は「〜てもらえませんか」です。1の「〜てあげませんか」は「（第三者に）してあげようか」という勧誘になり誤りです。" },
+          { id: 77, q: "社長が 私に 新しい プロジェクトの 資料を（ ）。", options: ["くれました", "くださいました", "いただきました", "もらいました"], ans: 2, exp: "主語が目上の人物（社長が）であり、話し手に利益や物品を恵み与える行為であるため、動詞「くれる」の尊敬語「くださいました」を用います。" },
+          { id: 78, q: "（私は）田中先生に すばらしい 本を（ ）。", options: ["いただきました", "くださいました", "あげました", "やりました"], ans: 1, exp: "主語が話し手自身（私は）であり、相手（田中先生に）から恩恵・物品を受領するため、「もらう」の謙譲語「いただきました」を用います。" },
+          { id: 79, q: "毎朝、庭の 花に 水を（ ）。", options: ["あげます", "やります", "もらいます", "いただきます"], ans: 2, exp: "動植物（花・ペット）に対する授与・施しには、伝統的・標準的な表現として「やる（水をやります）」を用います。" },
+          { id: 80, q: "先生に お願いして、推薦状を 書いて（ ）。", options: ["いただきました", "くださいました", "あげました", "やりました"], ans: 1, exp: "先生に依頼して書いてもらった動作の受領（恩恵）を表すため、「書いていただきました」と謙譲表現を用います。" },
+          { id: 81, q: "課長が 駅まで 車で 送って（ ）。", options: ["いただきました", "くださいました", "もらいました", "あげました"], ans: 2, exp: "主語が目上の人物（課長が）であり、課長が自発的に車で送ってくれた好意を高めるため、「送ってくださいました」と尊敬表現を用います。" },
+          { id: 82, q: "金閣寺は 14世紀に（ ）。", options: ["たてました", "たてられました", "たってありました", "たてさせました"], ans: 2, exp: "歴史的建造物（金閣寺）を主語に据え、不特定の人間によって建造された客観的事実を述べる事物主語の受身「建てられました」が正解です。" },
+          { id: 83, q: "この 絵は 有名な 画家（ ）描かれました。", options: ["に", "から", "によって", "で"], ans: 3, exp: "絵画、著作、発明などの創作・産出行為を表す受身文において、その創作者・行為者を示す助詞は「によって」を用います。" },
+          { id: 84, q: "先生、重そうな お荷物ですね。私が（ ）しましょうか。", options: ["お持ちに", "お持ち", "持たれ", "お持たせ"], ans: 2, exp: "目上の人のために自分が荷物を持つ動作をへりくだって申し出る謙譲語Iの構文は「お＋ます形語幹＋する」です。したがって「お持ちしましょうか」となります。" },
+          { id: 85, q: "ちょっと 実家の 母に 電話を（ ）んですが、失礼しても いいですか。", options: ["かけたい", "おかけしたい", "おかけになりたい", "かけられたい"], ans: 1, exp: "自分の家族（実家の母）に対する行為は敬意を高める対象（向かい手）にはならないため、「おかけしたい」とするのは過剰敬語の誤りです。通常の「かけたい」を用います。" }
+        ]
+      },
+      {
+        partName: "第 6 部：條件、時態切片、推斷與複合動詞專項",
+        questions: [
+          { id: 86, q: "天気予報に よると、明日は 雨が（ ）。", options: ["ふるらしい", "ふりなさい", "ふらせる", "ふられる"], ans: 1, exp: "冒頭に情報源を示す「天気予報によると」があるため、推量・伝聞の「降るらしい」と呼応します。2の「降りなさい」は大自然に対する不条理な命令となるため誤りです。" },
+          { id: 87, q: "あの 人は 歌が 上手で、まるで 歌手（ ）ですね。", options: ["そう", "のよう", "らしい", "みたいに"], ans: 2, exp: "文末が「〜ですね」となっているため、比喩（比況）の文型として成立するのは連体修飾の「のよう（歌手のようですね）」です。旧選択肢「みたい」は名詞に直接接続して文末で成立してしまうため、連用形の「みたいに」に変更して排除しました。" },
+          { id: 88, q: "この ケーキは とても おいし（ ）ですね。一口 食べてみたいです。", options: ["いそう", "そう", "だそう", "くそう"], ans: 2, exp: "食べる前の視覚的判断（様態）を表すため、い形容詞「おいしい」の語幹に接続して「おいしそう」となります。1の「おいしいそう」は伝聞（〜と聞いた）の意味になります。" },
+          { id: 89, q: "友達の 話に よると、あの 映画は とても（ ）そうです。", options: ["おもしろ", "おもしろい", "おもしろく", "おもしろさ"], ans: 2, exp: "「友達の話によると」という情報源に基づく伝聞表現であるため、い形容詞の普通形（終止形）に接続して「おもしろい そうです」となります。" },
+          { id: 90, q: "「今 いいですか。」「すみません、今から 電車に（ ）ところなんです。」", options: ["乗る", "乗って いる", "乗った", "乗ろう"], ans: 1, exp: "「今から」とあり、動作がまさに開始されようとしている直前の瞬間を表すため、辞書形接続の「乗る ところです」を用います。" },
+          { id: 91, q: "たった今、昼ごはんを 食べ（ ）ところですから、お腹が いっぱいです。", options: ["る", "て いる", "た", "よう"], ans: 3, exp: "「たった今」とあり、動作が物理的に完了した直後の瞬間を表すため、た形接続の「食べた ところです」を用います。" },
+          { id: 92, q: "先月 日本へ 来た（ ）なので、まだ 地理が よく 分かりません。", options: ["ところ", "ばかり", "はず", "よう"], ans: 2, exp: "「先月」と数週間の時間が経過していますが、話者の心理・主観において「まだ時間が経っていない」と認識しているため、「〜たばかり（来たばかり）」を用います。「〜たところ」は客観的に直前の時間（数分以内）にしか使えません。" },
+          { id: 93, q: "先週 直して もらった（ ）なのに、また テレビが 壊れて しまいました。", options: ["ところ", "ばかり", "はず", "よう"], ans: 2, exp: "「先週直してもらったばかりなのに」のように、「〜たばかり」に逆接の「のに」が結合すると、「完了してから間もないのに、事と次第が逆行している」という強い不満・遺憾を表します。" },
+          { id: 94, q: "田中さんは 10年も アメリカに 住んで いましたから、英語が 上手な（ ）です。", options: ["はず", "つもり", "ところ", "らしい"], ans: 1, exp: "「アメリカに10年も住んでいた」という客観的な確証・根拠に基づいて、「当然そうであるに違いない」と論理的に推断するため、「上手な はずです」を用います。" },
+          { id: 95, q: "あの 真面目な 山田さんが、嘘を つく（ ）が ありません。", options: ["つもり", "はず", "こと", "よう"], ans: 2, exp: "確固たる根拠・信頼に基づき、「絶対に〜ない」と論理的に完全否定する文型は「〜はずがない（はずがありません）」です。同義表現である「わけ（わけがない）」を選択肢から外し、「こと」に差し替えることで正解を一本化しました。" },
+          { id: 96, q: "健康の ために、夜は 甘い 物を 食べない（ ）に しました。", options: ["ほう", "こと", "ため", "つもり"], ans: 2, exp: "話者自身が自らの意志で方針やルールを決定する構文は「動詞ない形＋ことにする」です。「〜ようにする（努力する）」との選択肢干渉を防ぐため、選択肢 3 を「ため」に差し替えました。" },
+          { id: 97, q: "会社の 命令で、来月から 大阪へ 転勤する（ ）に なりました。", options: ["ほう", "こと", "よう", "つもり"], ans: 2, exp: "会社の辞令など、個人の意志ではなく組織や外部の客観的決定・規定に従う構文は「動詞辞書形＋ことになる」です（転勤することになりました）。" },
+          { id: 98, q: "「大切な 傘を 電車に 忘れ（ ）ました。」（＝忘れて しまいました）", options: ["ちゃい", "とき", "なきゃ", "ちゃ"], ans: 1, exp: "完了・後悔を表す「〜てしまいました」の口語縮約形は「〜ちゃいました」です（忘れてしまいました ➔ 忘れちゃいました）。したがって「ちゃい」が入ります。" },
+          { id: 99, q: "北海道へ（ ）、きれいな 写真を たくさん 撮って きます。", options: ["行けば", "行ったら", "行くと", "行くなら"], ans: 2, exp: "後件に話者の意志的動作（撮ってきます）が来ています。前件が動作動詞（行く）の場合、「〜ば」の後ろに意志・希望文を続けることはできない制約があるため、確定条件・仮定条件を広くカバーできる「行ったら」を用います。" },
+          { id: 100, q: "朝、家を（ ）、一面 雪景色だった。", options: ["出れば", "出ると", "出てから", "出たら"], ans: 2, exp: "「家を出た瞬間に、目の前に雪景色が広がっているのを発見した」という契機・発見を表す条件表現は「動詞辞書形＋と」です（家を出ると、雪景色だった）。" }
+        ]
+      }
+    ];
+
+    function shuffle(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    let activeQuestions = [];
+    let currentIndex = 0;
+    let firstTryCorrectCount = 0;
+    let hasAttemptedWrong = false;
+    let clearedQuestions = new Set();
+
+    function assembleQuizQueue() {
+      activeQuestions = [];
+      rawParts.forEach(part => {
+        const shuffledPartQuestions = shuffle(part.questions).map(item => {
+          const meta = questionVisualMeta[item.id] || { theme: "bamboo_moon", caption: "【 幽 玄 の 景 】" };
+          const shuffledOptions = shuffle(item.options.map((opt, idx) => ({
+            text: opt,
+            isCorrect: (idx + 1 === item.ans)
+          })));
+          return {
+            ...item,
+            partName: part.partName,
+            graphicSVG: renderQuestionArtwork(item.id, meta.caption),
+            shuffledOptions: shuffledOptions
+          };
+        });
+        activeQuestions.push(...shuffledPartQuestions);
+      });
+    }
+
+    function startGame() {
+      initAudio();
+      assembleQuizQueue();
+      document.getElementById("start-screen").style.display = "none";
+      renderQuestion();
+    }
+    window.startGame = startGame;
+
+    function renderQuestion() {
+      hasAttemptedWrong = false;
+      const q = activeQuestions[currentIndex];
+
+      document.getElementById("hud-progress").textContent = `第 ${currentIndex + 1} / 100 題`;
+      document.getElementById("hud-score").textContent = `初手正解: ${firstTryCorrectCount}`;
+      document.getElementById("part-tag").textContent = q.partName;
+      document.getElementById("illustration-container").innerHTML = q.graphicSVG;
+      document.getElementById("q-num").textContent = `問${q.id}.`;
+      document.getElementById("q-text").textContent = q.q.replace(/問\s*\d+\s*/, "");
+      
+      document.getElementById("hint-msg").textContent = "";
+      document.getElementById("explanation-scroll").style.display = "none";
+      document.getElementById("next-btn").style.display = "none";
+
+      const container = document.getElementById("choices-container");
+      container.innerHTML = "";
+
+      q.shuffledOptions.forEach((optObj, idx) => {
+        const optionNum = idx + 1;
+        const btn = document.createElement("button");
+        btn.className = "choice-tile";
+        btn.innerHTML = `<span class="tile-index">${optionNum}</span><span>${optObj.text}</span>`;
+        btn.onclick = () => checkChoice(optObj, btn);
+        container.appendChild(btn);
+      });
+    }
+
+    function checkChoice(optObj, btnElement) {
+      const q = activeQuestions[currentIndex];
+
+      if (optObj.isCorrect) {
+        btnElement.classList.add("correct");
+        document.querySelectorAll(".choice-tile").forEach(b => b.disabled = true);
+        
+        playRinBell();
+        clearedQuestions.add(currentIndex);
+
+        if (!hasAttemptedWrong) {
+          firstTryCorrectCount++;
+          document.getElementById("hud-score").textContent = `初手正解: ${firstTryCorrectCount}`;
+        }
+
+        document.getElementById("explanation-text").innerHTML = `<strong>【正解：${q.options[q.ans - 1]}】</strong><br>${q.exp}`;
+        document.getElementById("explanation-scroll").style.display = "block";
+        document.getElementById("hint-msg").innerHTML = "<span style='color:#34d399;'>✨ 見事、正解です！</span>";
+        document.getElementById("next-btn").style.display = "block";
+
+      } else {
+        hasAttemptedWrong = true;
+        playBambooClack();
+        btnElement.classList.add("wrong");
+        btnElement.disabled = true;
+
+        document.getElementById("hint-msg").textContent = "惜しい！文脈を再吟味してみましょう（再選択可）";
+      }
+    }
+
+    function nextQuestion() {
+      playHyoshigi();
+      if (currentIndex < activeQuestions.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      } else {
+        finishGame();
+      }
+    }
+    window.nextQuestion = nextQuestion;
+
+    function finishGame() {
+      document.getElementById("finish-screen").style.display = "flex";
+      document.getElementById("finish-summary").innerHTML = 
+        `全100問の攻堅修練を見事完遂しました！<br>一度も間違えずに即答できた問題数：<strong>${firstTryCorrectCount} / 100 題</strong>`;
+    }
+
+    function restartGame() {
+      currentIndex = 0;
+      firstTryCorrectCount = 0;
+      clearedQuestions.clear();
+      document.getElementById("finish-screen").style.display = "none";
+      assembleQuizQueue();
+      renderQuestion();
+    }
+    window.restartGame = restartGame;
+
+    function openCatalog() {
+      playHyoshigi();
+      const grid = document.getElementById("catalog-pills");
+      grid.innerHTML = "";
+
+      activeQuestions.forEach((q, idx) => {
+        const pill = document.createElement("div");
+        pill.className = "q-pill";
+        if (clearedQuestions.has(idx)) pill.classList.add("cleared");
+        if (idx === currentIndex) pill.classList.add("active");
+        pill.textContent = `${idx + 1}`;
+        pill.title = `${q.partName} - 問${q.id}`;
+        pill.onclick = () => {
+          currentIndex = idx;
+          closeCatalog();
+          renderQuestion();
+        };
+        grid.appendChild(pill);
+      });
+
+      document.getElementById("catalog-modal").style.display = "flex";
+    }
+    window.openCatalog = openCatalog;
+
+    function closeCatalog() {
+      document.getElementById("catalog-modal").style.display = "none";
+    }
+    window.closeCatalog = closeCatalog;
+
+    /* Ambient Glowing Gold Particles & Fireflies Engine */
+    const canvas = document.getElementById("ambient-canvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class GoldParticle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.radius = Math.random() * 2 + 1;
+        this.vx = (Math.random() - 0.5) * 0.7;
+        this.vy = (Math.random() - 0.7) * 0.8;
+        this.alpha = Math.random();
+        this.alphaStep = Math.random() * 0.02 + 0.008;
+        this.pulseDir = Math.random() > 0.5 ? 1 : -1;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha += this.alphaStep * this.pulseDir;
+        if (this.alpha >= 1) { this.alpha = 1; this.pulseDir = -1; }
+        if (this.alpha <= 0.1) { this.alpha = 0.1; this.pulseDir = 1; }
+        if (this.x < 0) this.x = canvas.width;
+        if (this.x > canvas.width) this.x = 0;
+        if (this.y < 0) this.y = canvas.height;
+        if (this.y > canvas.height) this.y = 0;
+      }
+      draw() {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(253, 224, 71, ${this.alpha * 0.8})`;
+        ctx.shadowColor = "#facc15";
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < 40; i++) {
+      particles.push(new GoldParticle());
+    }
+
+    function animateAmbient() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateAmbient);
+    }
+    animateAmbient();
+  </script>
+</body>
+</html>
